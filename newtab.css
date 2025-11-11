@@ -1,6 +1,10 @@
+/*
+ * فایل نهایی newtab.css
+ * شامل: متغیرهای تم، چیدمان ضد-overflow، و استایل تمام ویجت‌ها
+ */
+
 /* --- ۱. متغیرهای CSS برای تم‌ها --- */
 :root {
-    /* تم تاریک (پیش‌فرض) */
     --bg-color: #111827;
     --text-color: #ffffff;
     --text-color-light: rgba(255, 255, 255, 0.7);
@@ -15,12 +19,15 @@
     --scroll-thumb: rgba(255, 255, 255, 0.4);
     --scroll-thumb-hover: rgba(255, 255, 255, 0.6);
     --danger-color: #f87171;
+    --danger-color-hover: #b91c1c;
+    --brand-color: #3b82f6;
+    --brand-color-hover: #2563eb;
+    --success-color: #10b981;
 }
 
 body.light-mode {
-    /* تم روشن */
-    --bg-color: #f3f4f6; /* bg-gray-100 */
-    --text-color: #1f2937; /* text-gray-800 */
+    --bg-color: #f3f4f6;
+    --text-color: #1f2937;
     --text-color-light: rgba(0, 0, 0, 0.6);
     --text-color-heading: #000000;
     --overlay-bg: rgba(255, 255, 255, 0.3);
@@ -28,36 +35,37 @@ body.light-mode {
     --glass-border: rgba(0, 0, 0, 0.1);
     --input-bg: rgba(0, 0, 0, 0.05);
     --input-border: rgba(0, 0, 0, 0.2);
-    --input-focus-ring: #3b82f6; /* blue-500 */
+    --input-focus-ring: #3b82f6;
     --scroll-track: rgba(0, 0, 0, 0.1);
     --scroll-thumb: rgba(0, 0, 0, 0.4);
     --scroll-thumb-hover: rgba(0, 0, 0, 0.6);
-    --danger-color: #ef4444; /* red-500 */
+    --danger-color: #ef4444;
+    --danger-color-hover: #dc2626;
 }
 
-/* --- ۲. تنظیمات پایه و پس‌زمینه --- */
+/* --- ۲. تنظیمات پایه و پس‌زمینه (ضد-Overflow) --- */
+html, body {
+    height: 100%;
+    overflow: hidden; /* جلوگیری از اسکرول کل صفحه */
+}
+
 body {
     font-family: 'Vazirmatn', sans-serif;
-    /* تصویر پس‌زمینه ثابت می‌ماند */
-    background-image: url('https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjUyOXwwfDF8c2VhcmNofDEzfHxyZWFjdCUyMGNvZGluZ3xlbnwwfHx8fDE3MTI4NjU5MTB8MA&ixlib=rb-4.0.3&q=80&w=1920');
+    background-image: url('https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjUyOXwwfDF8c2VhcmNofDEzfHxyZWFjdCUyMGNvZGluZ3xlbnwwfHx8fDE3MTI4NjU5MTB8MA&ixid=rb-4.0.3&q=80&w=1920');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-color: var(--bg-color); /* استفاده از متغیر */
-    color: var(--text-color); /* استفاده از متغیر */
+    background-color: var(--bg-color);
+    color: var(--text-color);
     min-height: 100vh;
-    padding: 2rem;
+    padding: 0;
     transition: background-color 0.3s, color 0.3s;
-}
-
-@media (max-width: 768px) {
-    body { padding: 1rem; }
 }
 
 .background-overlay {
     position: absolute;
     inset: 0;
-    background-color: var(--overlay-bg); /* استفاده از متغیر */
+    background-color: var(--overlay-bg);
     z-index: 0;
     transition: background-color 0.3s;
 }
@@ -68,24 +76,33 @@ body {
     max-width: 80rem; 
     margin-left: auto;
     margin-right: auto;
+    height: 100vh; /* ارتفاع کامل صفحه */
+    padding: 2rem;
+    box-sizing: border-box; /* برای محاسبه صحیح پدینگ */
+}
+
+@media (max-width: 768px) {
+    .root-container { padding: 1rem; }
 }
 
 /* --- ۳. افکت شیشه‌ای --- */
 .glass-effect {
-    background: var(--glass-bg); /* استفاده از متغیر */
+    background: var(--glass-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border); /* استفاده از متغیر */
+    border: 1px solid var(--glass-border);
     border-radius: 0.5rem; 
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* --- ۴. چیدمان گرید --- */
+/* --- ۴. چیدمان گرید (ضد-Overflow) --- */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 2rem; 
+    height: 100%; /* ارتفاع کامل کانتینر */
 }
+
 @media (min-width: 1024px) { 
     .grid-container {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -93,89 +110,105 @@ body {
     .main-column { grid-column: span 2 / span 2; }
     .sidebar-column { grid-column: span 1 / span 1; }
 }
-.main-column, .sidebar-column {
+
+.main-column {
     display: flex;
     flex-direction: column;
-    gap: 2rem; 
+    gap: 2rem;
+    padding-top: 4rem;
 }
 
-/* --- ۵. کامپوننت ساعت و خوش‌آمدگویی --- */
-.text-center { text-align: center; }
-.mb-8 { margin-bottom: 2rem; }
-@media (min-width: 768px) { 
-    .md\:text-right { text-align: right; }
+.sidebar-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* کمی فشرده‌تر */
+    height: 100%;
+    overflow-y: auto; /* *مهم*: فقط این ستون اسکرول می‌خورد */
+    padding-right: 0.5rem;
+    /* فید شدن لبه‌ها برای زیبایی اسکرول */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 1%, black 99%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent, black 1%, black 99%, transparent 100%);
 }
 
-.time-heading {
-    font-size: 4.5rem; 
-    line-height: 1;
-    font-weight: 700;
-    letter-spacing: -0.025em; 
-    color: var(--text-color-heading);
-    text-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+/* --- ۵. سوییچ تم --- */
+.theme-switch-wrapper {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 100;
 }
-@media (min-width: 768px) { 
-    .time-heading { font-size: 8rem; }
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
 }
-
-.greeting-text {
-    font-size: 1.5rem; 
-    line-height: 2rem;
-    font-weight: 300;
-    margin-top: 0.5rem; 
-    opacity: 0.9;
-    color: var(--text-color);
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    transition: .4s;
+    border-radius: 34px;
 }
-@media (min-width: 768px) { 
-    .greeting-text { font-size: 1.875rem; line-height: 2.25rem; }
-}
-
-/* --- ۶. کامپوننت جستجو --- */
-.search-form {
-    margin-bottom: 2.5rem; 
-    width: 100%;
-    max-width: 36rem; 
-    margin-left: auto;
-    margin-right: auto;
-}
-@media (min-width: 768px) { 
-    .search-form { margin-left: 0; margin-right: 0; }
-}
-.search-input {
-    width: 100%;
-    padding: 1rem; 
-    border-radius: 9999px; 
-    background-color: var(--input-bg); /* متغیر */
-    color: var(--text-color); /* متغیر */
-    border: 1px solid var(--input-border); /* متغیر */
-    font-size: 1.125rem; 
-    backdrop-filter: blur(4px);
+.slider:before {
+    position: absolute;
+    content: "🌙";
+    font-size: 12px;
     text-align: center;
-    transition: background-color 0.3s, border-color 0.3s;
+    line-height: 20px;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    color: black;
+    transition: .4s;
+    border-radius: 50%;
 }
-.search-input::placeholder {
-    color: var(--text-color-light); /* متغیر */
+input:checked + .slider {
+    background-color: var(--brand-color);
 }
-.search-input:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--input-focus-ring); /* متغیر */
-}
-@media (min-width: 768px) { 
-    .search-input { text-align: right; }
+input:checked + .slider:before {
+    transform: translateX(22px);
+    content: "☀️";
 }
 
-/* --- ۷. کامپوننت لینک‌های سریع (سفارشی) --- */
+/* --- ۶. ستون اصلی (جستجو و پیوندها) --- */
 .section-heading {
     font-size: 1.25rem; 
     font-weight: 600;
     margin-bottom: 1rem; 
     opacity: 0.8;
 }
-.section-heading-center {
-    font-size: 1.25rem; 
-    font-weight: 600;
-    margin-bottom: 1rem; 
+.search-form {
+    margin-bottom: 2.5rem; 
+    width: 100%;
+}
+.search-input {
+    width: 100%;
+    padding: 1rem; 
+    border-radius: 9999px; 
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+    font-size: 1.125rem; 
+    backdrop-filter: blur(4px);
     text-align: center;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.search-input::placeholder { color: var(--text-color-light); }
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--input-focus-ring);
+}
+@media (min-width: 768px) { 
+    .search-input { text-align: right; }
 }
 
 .links-grid {
@@ -200,21 +233,16 @@ body {
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     color: var(--text-color);
-    position: relative; /* برای دکمه حذف */
+    position: relative;
+    word-break: break-word;
+    text-align: center;
 }
 .link-card:hover {
-    background: var(--input-bg); /* متغیر */
-}
-.link-icon { /* این کلاس دیگر استفاده نمی‌شود مگر اینکه بخواهید آیکون پیش‌فرض بگذارید */
-    width: 2.5rem; 
-    height: 2.5rem; 
-    margin-bottom: 0.5rem; 
+    background: var(--input-bg);
 }
 .link-text {
     font-size: 0.875rem; 
     line-height: 1.25rem;
-    word-break: break-word;
-    text-align: center;
 }
 .link-delete-btn {
     position: absolute;
@@ -231,10 +259,13 @@ body {
     cursor: pointer;
     font-weight: bold;
     opacity: 0.2;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, background-color 0.2s;
 }
 .link-card:hover .link-delete-btn {
     opacity: 1;
+}
+.link-delete-btn:hover {
+    background-color: var(--danger-color-hover);
 }
 
 .add-link-form {
@@ -245,7 +276,6 @@ body {
     gap: 0.5rem;
 }
 .add-link-form input {
-    /* از استایل‌های ویجت استفاده می‌کنیم */
     flex-grow: 1;
     padding: 0.5rem; 
     border-radius: 0.375rem;
@@ -260,9 +290,8 @@ body {
     box-shadow: 0 0 0 1px var(--input-focus-ring);
 }
 .add-link-form button {
-    /* از استایل‌های ویجت استفاده می‌کنیم */
     padding: 0.5rem 1rem; 
-    background-color: #3b82f6; 
+    background-color: var(--brand-color); 
     border-radius: 0.375rem;
     transition: background-color 0.2s;
     border: none;
@@ -270,20 +299,21 @@ body {
     cursor: pointer;
 }
 .add-link-form button:hover {
-    background-color: #2563eb; 
+    background-color: var(--brand-color-hover); 
 }
 
-/* --- ۸. ابزارها (لیست کارها و یادداشت‌ها) --- */
+/* --- ۷. ستون کناری و ویجت‌های عمومی --- */
+.section-heading-center {
+    font-size: 1.25rem; 
+    font-weight: 600;
+    margin-bottom: 1rem; 
+    text-align: center;
+}
 .widget-card {
-    padding: 1rem; 
-    height: 100%;
+    padding: 1.25rem; /* p-5 */
     display: flex;
     flex-direction: column;
-}
-
-.todo-form {
-    display: flex;
-    margin-bottom: 1rem; 
+    flex-shrink: 0; /* جلوگیری از کوچک شدن ویجت‌ها */
 }
 .widget-input {
     flex-grow: 1;
@@ -294,6 +324,7 @@ body {
     color: var(--text-color);
     border: 1px solid var(--input-border);
     backdrop-filter: blur(4px);
+    border-right: none;
 }
 .widget-input::placeholder { color: var(--text-color-light); }
 .widget-input:focus {
@@ -302,7 +333,7 @@ body {
 }
 .widget-button {
     padding: 0.5rem 1rem; 
-    background-color: #3b82f6; 
+    background-color: var(--brand-color); 
     border-top-left-radius: 0.375rem; 
     border-bottom-left-radius: 0.375rem;
     transition: background-color 0.2s;
@@ -311,27 +342,127 @@ body {
     cursor: pointer;
 }
 .widget-button:hover {
-    background-color: #2563eb; 
+    background-color: var(--brand-color-hover); 
 }
 .widget-button.danger {
     background-color: var(--danger-color);
 }
 .widget-button.danger:hover {
-    background-color: #b91c1c; /* red-800 */
+    background-color: var(--danger-color-hover);
 }
-
 .widget-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem; 
     overflow-y: auto;
-    max-height: calc(80vh - 120px);
+    /* max-height: calc(80vh - 120px); (دیگر نیازی به این نیست) */
+}
+
+/* --- ۸. ویجت ساعت و آب و هوا --- */
+.clock-weather-widget {
+    text-align: center;
+    padding: 2rem 1.25rem;
+}
+.clock-display {
+    font-size: 3.5rem; /* 6xl */
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-color-heading);
+    letter-spacing: -0.025em;
+}
+.greeting-display {
+    font-size: 1.25rem; /* xl */
+    font-weight: 300;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+}
+.weather-container {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--text-color-light);
+    height: 40px; /* ارتفاع ثابت برای جلوگیری از پرش محتوا */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#weather-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 1.125rem; /* text-lg */
+    color: var(--text-color);
+}
+#weather-temp {
+    font-weight: 500;
+}
+#weather-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* --- ۹. ویجت پومودورو --- */
+.pomodoro-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.pomodoro-visual {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 0.5rem;
+}
+.pomodoro-visual svg {
+    width: 100%;
+    height: 100%;
+}
+.pomo-bg-ring {
+    fill: none;
+    stroke: var(--input-bg);
+    stroke-width: 12;
+}
+.pomo-progress-ring {
+    fill: none;
+    stroke: var(--brand-color);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s;
+}
+.pomo-time-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem; /* 3xl */
+    font-weight: 700;
+    color: var(--text-color-heading);
+}
+.pomo-stage-display {
+    font-size: 1rem;
+    color: var(--text-color-light);
+    font-weight: 500;
+}
+.pomodoro-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+.pomodoro-controls .widget-button {
+    border-radius: 0.375rem; /* گرد کردن هر دو دکمه */
+}
+
+/* --- ۱۰. ویجت لیست کارها --- */
+.todo-form {
+    display: flex;
+    margin-bottom: 1rem; 
 }
 .todo-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--input-bg); /* متغیر */
+    background-color: var(--input-bg);
     padding: 0.5rem; 
     border-radius: 0.375rem; 
 }
@@ -345,7 +476,7 @@ body {
 }
 .todo-delete-btn {
     margin-right: 0.5rem; 
-    color: var(--danger-color); /* متغیر */
+    color: var(--danger-color);
     font-weight: bold;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -353,12 +484,13 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
+    transition: color 0.2s;
 }
 .todo-delete-btn:hover {
-    color: #fca5a5; 
+    color: var(--danger-color-hover);
 }
 
-/* --- ۹. یادداشت سریع --- */
+/* --- ۱۱. ویجت یادداشت سریع --- */
 .widget-textarea {
     flex-grow: 1;
     width: 100%;
@@ -370,6 +502,7 @@ body {
     backdrop-filter: blur(4px);
     resize: none;
     min-height: 200px;
+    box-sizing: border-box;
 }
 .widget-textarea::placeholder { color: var(--text-color-light); }
 .widget-textarea:focus {
@@ -377,86 +510,8 @@ body {
     box-shadow: 0 0 0 1px var(--input-focus-ring);
 }
 
-/* --- ۱۰. استایل‌های قابلیت‌های جدید --- */
-
-/* سوییچ تم */
-.theme-switch-wrapper {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    z-index: 100;
-}
-.theme-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px; /* 60px */
-    height: 28px; /* 34px */
-}
-.theme-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    transition: .4s;
-    border-radius: 34px;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 20px; /* 26px */
-    width: 20px; /* 26px */
-    left: 4px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-    /* آیکون ماه */
-    content: '🌙';
-    font-size: 12px;
-    text-align: center;
-    line-height: 20px;
-}
-input:checked + .slider {
-    background-color: #3b82f6;
-}
-input:checked + .slider:before {
-    transform: translateX(22px);
-    /* آیکون خورشید */
-    content: '☀️';
-}
-
-/* تایمر پومودورو */
-.pomodoro-timer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-.pomodoro-display {
-    font-size: 3rem; /* text-5xl */
-    font-weight: 700;
-    color: var(--text-color-heading);
-}
-.pomodoro-controls {
-    display: flex;
-    gap: 0.5rem;
-}
-/* برای دکمه‌های پومودورو، گوشه‌ها را گرد می‌کنیم (چون در فرم نیستند) */
-.pomodoro-controls .widget-button {
-    border-radius: 0.375rem;
-}
-
-/* --- ۱۱. اسکرول بار سفارشی --- */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--scroll-track); border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--scroll-thumb-hover); }
+/* --- ۱۲. اسکرول بار سفارشی (فقط ستون کناری) --- */
+.sidebar-column::-webkit-scrollbar { width: 8px; }
+.sidebar-column::-webkit-scrollbar-track { background: var(--scroll-track); border-radius: 10px; }
+.sidebar-column::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 10px; }
+.sidebar-column::-webkit-scrollbar-thumb:hover { background: var(--scroll-thumb-hover); }

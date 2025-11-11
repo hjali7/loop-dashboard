@@ -1,0 +1,29 @@
+name: Build Chrome Extension
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Zip Archive
+        run: |
+          zip -r extension.zip . \
+          -x ".git/*" \
+          -x ".github/*" \
+          -x ".gitignore" \
+          -x "README.md"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: developer-dashboard-extension
+          path: extension.zip

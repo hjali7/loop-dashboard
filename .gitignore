@@ -1,0 +1,18 @@
+# فایل‌های سیستم عامل
+.DS_Store
+Thumbs.db
+
+# فایل‌های محیط توسعه
+.idea/
+.vscode/
+
+# فایل‌های بسته نصبی
+*.zip
+*.crx
+
+# وابستگی‌ها (اگر از npm استفاده کردید)
+node_modules/
+package-lock.json
+
+# فایل‌های محلی
+.env

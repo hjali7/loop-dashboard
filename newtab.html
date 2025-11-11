@@ -15,19 +15,14 @@
     <div class="theme-switch-wrapper">
         <label class="theme-switch" for="theme-toggle">
             <input type="checkbox" id="theme-toggle">
-            <span classs="slider round"></span>
+            <span class="slider"></span>
         </label>
     </div>
 
     <div id="root" class="root-container">
         <div class="grid-container">
             
-            <div class="main-column">
-                <div class="text-center md:text-right mb-8">
-                    <h1 id="time" class="time-heading">00:00:00</h1>
-                    <p id="greeting" class="greeting-text">...</p>
-                </div>
-
+            <div classs="main-column">
                 <form action="https://www.google.com/search" method="GET" target="_blank" class="search-form">
                     <input 
                         type="text" 
@@ -37,13 +32,13 @@
                     >
                 </form>
 
-                <div class="text-center md:text-right">
+                <div class="links-widget">
                     <h2 class="section-heading">پیوندهای پرکاربرد</h2>
                     <div id="links-grid" class="links-grid">
                         </div>
                     
                     <form id="add-link-form" class="add-link-form glass-effect">
-                        <input type="text" id="link-name-input" placeholder="نام پیوند (مثلا: گیت‌هاب)" required>
+                        <input type="text" id="link-name-input" placeholder="نام پیوند" required>
                         <input type="url" id="link-url-input" placeholder="آدرس (https://...)" required>
                         <button type="submit">افزودن</button>
                     </form>
@@ -52,10 +47,25 @@
 
             <div class="sidebar-column">
                 
+                <div class="glass-effect widget-card clock-weather-widget">
+                    <div id="clock-display" class="clock-display">00:00:00</div>
+                    <p id="greeting-display" class="greeting-display">...</p>
+                    <div id="weather-container" class="weather-container">
+                        <p id="weather-loading">...در حال بارگذاری آب و هوا</p>
+                        </div>
+                </div>
+
                 <div class="glass-effect widget-card">
                     <h2 class="section-heading-center">تایمر پومودورو</h2>
                     <div id="pomodoro-timer" class="pomodoro-timer">
-                        <div id="pomodoro-display" class="pomodoro-display">25:00</div>
+                        <div class="pomodoro-visual">
+                            <svg width="150" height="150" viewBox="0 0 120 120">
+                                <circle class="pomo-bg-ring" cx="60" cy="60" r="54"></circle>
+                                <circle class="pomo-progress-ring" cx="60" cy="60" r="54" transform="rotate(-90 60 60)"></circle>
+                            </svg>
+                            <span id="pomo-time-display" class="pomo-time-display">25:00</span>
+                        </div>
+                        <div id="pomo-stage-display" class="pomo-stage-display">آماده‌اید؟</div>
                         <div class="pomodoro-controls">
                             <button id="pomo-start-btn" class="widget-button">شروع</button>
                             <button id="pomo-reset-btn" class="widget-button danger">ریست</button>
@@ -66,15 +76,8 @@
                 <div class="glass-effect widget-card">
                     <h2 class="section-heading-center">لیست کارها</h2>
                     <form id="todo-form" class="todo-form">
-                        <input 
-                            type="text" 
-                            id="todo-input"
-                            placeholder="کار جدید..."
-                            class="widget-input"
-                        >
-                        <button type="submit" class="widget-button">
-                            افزودن
-                        </button>
+                        <input type="text" id="todo-input" placeholder="کار جدید..." class="widget-input">
+                        <button type="submit" class="widget-button">افزودن</button>
                     </form>
                     <div id="todo-list" class="widget-list">
                         </div>
@@ -82,11 +85,7 @@
 
                 <div class="glass-effect widget-card">
                     <h2 class="section-heading-center">یادداشت سریع</h2>
-                    <textarea
-                        id="notes-textarea"
-                        placeholder="...یادداشت‌های خود را اینجا بنویسید"
-                        class="widget-textarea"
-                    ></textarea>
+                    <textarea id="notes-textarea" placeholder="...یادداشت‌های خود را اینجا بنویسید" class="widget-textarea"></textarea>
                 </div>
             </div>
             

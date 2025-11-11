@@ -1,12 +1,16 @@
 {
     "manifest_version": 3,
     "name": "Developer Dashboard",
-    "version": "1.0",
+    "version": "1.1",
     "description": "A custom, fast and useful dashboard for developers.",
     "chrome_url_overrides": {
       "newtab": "newtab.html"
     },
     "permissions": [
-      "storage"
+      "storage",
+      "geolocation"
+    ],
+    "host_permissions": [
+      "https://api.openweathermap.org/*"
     ]
   }
